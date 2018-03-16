@@ -209,9 +209,10 @@
                         return;
                     }
                     
-					var decimalPointIndex = value.indexOf(settings.decimal);
+                    var isNumber = !isNaN(value);
+					var decimalPointIndex = isNumber ? value.indexOf('.') : value.indexOf(settings.decimal);
                     if (settings.precision > 0) {
-						if(decimalPointIndex < 0){
+						if (decimalPointIndex < 0) {
 							value += settings.decimal + new Array(settings.precision + 1).join(0);
 						}
 						else {
@@ -223,7 +224,7 @@
 						}
                     } else if (decimalPointIndex > 0) {
                         // if the precision is 0, discard the decimal part
-                        value = value.slice(0, decimalPointIndex);
+                        // value = value.slice(0, decimalPointIndex);
                     }
                     $input.val(maskValue(value, settings));
                 }
@@ -535,7 +536,7 @@
         if (settings.precision > 0) {
             if(!isNaN(value) && value.indexOf(settings.decimal)){
                 var precision = value.substr(value.indexOf(settings.decimal) + 1);
-                onlyNumbers += new Array((settings.precision + 1) - precision.length).join(0);
+                // onlyNumbers += new Array((settings.precision + 1) - precision.length).join(0);
                 integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision);
                 newValue = buildIntegerPart(integerPart, negative, settings);
             }
